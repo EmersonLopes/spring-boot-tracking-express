@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: tracking-entry
+  kafka:
+    bootstrap-servers: localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 8090
+
+topics:
+  tracking_entries: tracking_entries

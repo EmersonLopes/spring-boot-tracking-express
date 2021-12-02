@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: store-tracking-history
+  kafka:
+    bootstrap-servers: localhost:9093
+    consumer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      group-id: store-tracking-history
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 8092
+
+topics:
+  tracking_entries: tracking_entries
