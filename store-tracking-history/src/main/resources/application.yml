@@ -7,6 +7,16 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       group-id: store-tracking-history
+  data:
+    mongodb:
+#      uri:
+#        mongodb://root:root@localhost:27017/tracking_db?authSource=admin
+      host: localhost
+      port: 27017
+      database: tracking_db
+      username: root
+      password: root
+      authentication-database: admin
 
   jackson:
     deserialization:
