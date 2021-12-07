@@ -1,6 +1,8 @@
 package com.example.storetrackinghistory.kafka;
 
 import com.example.storetrackinghistory.dto.TrackingDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -13,8 +15,10 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.RecordInterceptor;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+@Slf4j
 @Configuration
 @EnableKafka
 public class KafkaConfig {
@@ -58,6 +62,14 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, TrackingDTO> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(trackingConsumerFactory());
+        factory.setRecordInterceptor(trackingInterceptor());
         return factory;
+    }
+
+    private RecordInterceptor<String, TrackingDTO> trackingInterceptor(){
+        return consumerRecord -> {
+          log.info("Record: {}", consumerRecord);
+          return consumerRecord;
+        };
     }
 }
